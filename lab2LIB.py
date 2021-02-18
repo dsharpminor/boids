@@ -114,6 +114,28 @@ def evade(self, rock_group):
     return steer
 
 
+def evade_missiles(self, rock_group, missile_group):
+    steer = [0, 0]
+    total = 0
+    average_vectors = [0, 0]
+    for rock in rock_group:
+        for missile in missile_group:
+            distance = dist(missile.pos, self.pos)
+            if self.pos != rock.pos and distance < rock_vision + 50:
+                diff = vector_sub(self.pos, missile.pos)
+                diff = vector_div_const(diff, distance)
+                average_vectors = vector_add(average_vectors, diff)
+                total += 1
+    if total > 0:
+        average_vectors = vector_div_const(average_vectors, total)
+        if vector_norm(steer) > 0:
+            average_vectors = vector_multiply(vector_div_const(average_vectors, vector_norm(steer)), 2)
+        steer = vector_sub(average_vectors, self.vel)
+        if vector_norm(steer) > 2:
+            steer = vector_multiply(vector_div_const(steer, vector_norm(steer)), 2.5)
+    return steer
+
+
 def attack(self, rock_group):
     steer = [0, 0]
     total = 0
@@ -140,8 +162,10 @@ def apply_behaviour(self, rock_group):
     alignment = self.align(rock_group)
     evasion = self.evade(rock_group)
     attack = self.attack(rock_group)
+    dodge = self.evade_missiles(rock_group, missile_group)
     self.acc = vector_add(self.acc, alignment)
     self.acc = vector_add(self.acc, separation)
     self.acc = vector_add(self.acc, cohesion)
-    # self.acc = vector_add(self.acc, evasion)
-    self.acc = vector_add(self.acc, attack)
+    self.acc = vector_add(self.acc, dodge)
+    self.acc = vector_add(self.acc, evasion)
+    # self.acc = vector_add(self.acc, attack)
