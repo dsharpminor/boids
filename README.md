@@ -12,7 +12,7 @@ Project is created with:
 * Codeskulptor simplegui API
 
 ## Setup
-To run this project, run 'lab2LIB.py'. 
+To run this project, run 'lab2LIB.py' or go to http://www.codeskulptor.org/#user48_mXcelY8zhi_0.py
 In order to choose only one or a few type of behaviour, go to "apply_behaviour" function and comment/uncomment respective lines of code.
 For instance, if you only uncomment these 3 lines of code, you will get flocking behavior.
 
