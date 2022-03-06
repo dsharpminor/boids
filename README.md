@@ -28,5 +28,5 @@ If you add these two lines, then boids will evade both the ships and its missile
 ```
 Choosing to uncomment this line instead of the previous two will lead to attacking behaviour.
 ```python
-self.acc = vector_add(self.acc, attack)
+    self.acc = vector_add(self.acc, attack)
 ```
